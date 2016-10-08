@@ -1,0 +1,283 @@
+{
+  "name": "sift-connected",
+  "display-name": "Connected Sift",
+  "subtitle": "Don't miss out on important emails",
+  "description": "This Sift will prioritize your incoming emails based on the strength of your social connections with the sender. It currently supports Twitter and Angel List connections.",
+  "author": "Randal Pinto <randal@redsift.io>",
+  "version": "1.0.0",
+  "icon": "assets/icon.svg",
+  "marketing": {
+    "screenshots": [
+      "assets/screenshot-0.png",
+      "assets/screenshot-1.png",
+      "assets/screenshot-2.png"
+    ],
+    "links": [
+      {
+        "label": "Github",
+        "type": "github",
+        "url": "https://github.com/redsift/sift-connected"
+      }
+    ]
+  },
+  "interfaces": {
+    "email": {
+      "client": {
+        "controller": "dist/js/email-client-controller.umd-es2015.js"
+      },
+      "thread": {
+        "controller": "dist/js/controller.umd-es2015.js"
+      }
+    },
+    "summary": {
+      "controller": "dist/js/controller.umd-es2015.js"
+    }
+  },
+  "dag": {
+    "inputs": {
+      "webhooks": {
+        "fc-wh": {
+          "inbound": {
+            "uri": "{key}/{value}"
+          }
+        },
+        "twitter-wh": {
+          "inbound": {
+            "uri": "{key}/{value}"
+          }
+        },
+        "angel_list-wh": {
+          "inbound": {
+            "uri": "{key}/{value}"
+          }
+        }
+      },
+      "emails": {
+        "all-emails": {
+          "filter": {
+            "conditions": [
+              {
+                "from": {
+                  "regexp": {
+                    "pattern": ".*",
+                    "flags": "i"
+                  }
+                }
+              }
+            ],
+            "operator": "AND"
+          }
+        }
+      }
+    },
+    "nodes": [
+      {
+        "#": "Twitter Webhook",
+        "implementation": {
+          "javascript": "server/tokens.js"
+        },
+        "input": {
+          "bucket": "twitter-wh"
+        },
+        "outputs": {
+          "auth-cache": {},
+          "auth": {}
+        }
+      },
+      {
+        "#": "Angel List Webhook",
+        "implementation": {
+          "javascript": "server/tokens.js"
+        },
+        "input": {
+          "bucket": "angel_list-wh"
+        },
+        "outputs": {
+          "auth-cache": {},
+          "auth": {}
+        }
+      },
+      {
+        "#": "Fullcontact Webhook",
+        "implementation": {
+          "javascript": "server/tokens.js"
+        },
+        "input": {
+          "bucket": "fc-wh"
+        },
+        "outputs": {
+          "auth-cache": {},
+          "auth": {}
+        }
+      },
+      {
+        "#": "Map",
+        "implementation": {
+          "javascript": "server/map.js"
+        },
+        "input": {
+          "bucket": "all-emails"
+        },
+        "outputs": {
+          "person": {}
+        }
+      },
+      {
+        "#": "Person",
+        "implementation": {
+          "javascript": "server/person.js"
+        },
+        "input": {
+          "bucket": "person",
+          "select": "/$email",
+          "with": {
+            "bucket": "emails-fc-cache",
+            "select": "$email"
+          },
+          "lookup": [
+            {
+              "bucket": "auth-cache",
+              "key": "fullcontact"
+            }
+          ]
+        },
+        "outputs": {
+          "emails-fc-cache": {},
+          "twitter": {},
+          "angellist": {},
+          "slackresponse": {}
+        }
+      },
+      {
+        "#": "Twitter",
+        "implementation": {
+          "javascript": "server/twitter.js"
+        },
+        "input": {
+          "bucket": "twitter",
+          "select": "//$id",
+          "with": {
+            "bucket": "twids-cache",
+            "select": "$id"
+          },
+          "lookup": [
+            {
+              "bucket": "auth-cache",
+              "key": "twitter",
+              "createDependency": true
+            },
+            {
+              "bucket": "user-cache",
+              "key": "twitter"
+            }
+          ]
+        },
+        "outputs": {
+          "twids-cache": {},
+          "user-cache": {},
+          "stats": {},
+          "reduce": {}
+        }
+      },
+      {
+        "#": "Angel List",
+        "implementation": {
+          "javascript": "server/angellist.js"
+        },
+        "input": {
+          "bucket": "angellist",
+          "select": "//$id",
+          "with": {
+            "bucket": "alids-cache",
+            "select": "$id"
+          },
+          "lookup": [
+            {
+              "bucket": "auth-cache",
+              "key": "angel_list",
+              "createDependency": true
+            },
+            {
+              "bucket": "user-cache",
+              "key": "angellist"
+            }
+          ]
+        },
+        "outputs": {
+          "alids-cache": {},
+          "user-cache": {},
+          "stats": {},
+          "reduce": {}
+        }
+      },
+      {
+        "#": "Reduce",
+        "implementation": {
+          "javascript": "server/reduce.js"
+        },
+        "input": {
+          "bucket": "reduce",
+          "select": "/*/*"
+        },
+        "outputs": {
+          "tidList": {},
+          "slackresponse": {}
+        }
+      }
+    ],
+    "stores": {
+      "person": {
+        "key$schema": "string/string"
+      },
+      "twitter": {
+        "key$schema": "string/string/string"
+      },
+      "angellist": {
+        "key$schema": "string/string/string"
+      },
+      "emails-fc-cache": {
+        "key$schema": "string",
+        "ttl": 2678400
+      },
+      "twids-cache": {
+        "key$schema": "string",
+        "ttl": 86400
+      },
+      "alids-cache": {
+        "key$schema": "string",
+        "ttl": 86400
+      },
+      "user-cache": {
+        "key$schema": "string",
+        "ttl": 86400
+      },
+      "auth-cache": {
+        "key$schema": "string"
+      },
+      "reduce": {
+        "key$schema": "string/string/string"
+      },
+      "slackresponse": {
+        "key$schema": "string",
+        "ttl": 30
+      },
+       "nowhere": {
+        "key$schema": "string",
+        "ttl": 30
+      }
+   },
+    "outputs": {
+      "exports": {
+        "tidList": {
+          "import": "_email.tid"
+        },
+        "auth": {
+          "key$schema": "string"
+        },
+        "stats": {
+          "key$schema": "string"
+        }
+      }
+    }
+  }
+}

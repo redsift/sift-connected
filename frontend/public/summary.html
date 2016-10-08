@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" style="height:100%">
+
+<head>
+  <!-- Basic Page Needs –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Connected Sift</title>
+  <meta name="description" content="Social Inbox Priority">
+  <meta name="author" content="Randal Pinto">
+  <!-- Mobile Specific Metas –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=320, initial-scale=1, maximum-scale=1, user-scalable=0">
+  <!-- CSS –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="dist/css/style.min.css">
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+</head>
+
+<body id="home">
+  <rs-hero header="Connected Sift" bg-class="-bg-hero -effect-darken" scroll-target="#scroll-target" sticky-header=".content">
+    <p class="fade-in delay">Social inbox prioritization</p>
+  </rs-hero>
+  <a id="help" class="help" href="#">
+    <img src="assets/help.svg" style="position: fixed; top: 30px; right: 20px; z-index: 800;" />
+  </a>
+  <div class="content" id="scroll-target">
+    <div id="disconnected" class="disconnected page">
+      <button id="setup" class="rs-btn--green">Setup</button>
+    </div>
+    <div id="connected" class="connected page" style="display: none;">
+      <div class="card card-one">
+        <div class="card__header">You</div>
+        <div class="card__body">
+          <button class="login-button rs-btn--green" id="twitter"><i class="fa fa-twitter"></i> Connect</button>
+          <div class="my-twitter-info" style="display: none;">
+            <a href="#" target="_blank" class="my-twitter-link"><img src="assets/twitter.svg" class="social-icon" /></a>
+            <span class="my-twitter-name">Connected</span>
+          </div>
+          <button class="login-button rs-btn--green" id="angel_list"><i class="fa fa-angellist"></i> Connect</button>
+          <div class="my-angel_list-info" style="display: none;">
+            <a href="#" target="_blank" class="my-angel_list-link"><img src="assets/angellist.svg" class="social-icon" /></a>
+            <span class="my-angel_list-name">Connected</span>
+          </div>
+        </div>
+      </div>
+      <div class="card card-two">
+        <div class="card__header">Connected Emails</div>
+        <div class="stats__body">
+          <div class="stats-info">
+            <img title="Important" src="assets/green.svg" class="stat-icon" />
+            <span class="stat" id="emails-high">0</span>
+          </div>
+          <div class="stats-info">
+            <img title="Medium" src="assets/amber.svg" class="stat-icon" />
+            <span class="stat" id="emails-medium">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="card card-three">
+        <div class="card__header">Latest Connections</div>
+        <div class="card__body">
+          <div class="social-info" id="latest-twitter" style="visibility: hidden;">
+            <a href="#" target="_blank" class="icon-link" id="latest-twitter-url"><img src="assets/twitter.svg" class="social-icon" /></a>
+            <span class="social-name" id="latest-twitter-name">...</span>
+          </div>
+          <div class="social-info" id="latest-angel_list" style="visibility: hidden;">
+            <a href="#" target="_blank" class="icon-link" id="latest-angel_list-url"><img src="assets/angellist.svg" class="social-icon" /></a>
+            <span class="social-name" id="latest-angel_list-name">...</span>
+          </div>
+        </div>
+      </div>
+      <div class="card card-four">
+        <div class="card__header">Most Followed Connections</div>
+        <div class="card__body">
+          <div class="social-info" id="mostfollowed-twitter" style="visibility: hidden;">
+            <a href="#" target="_blank" class="icon-link" id="mostfollowed-twitter-url"><img src="assets/twitter.svg" class="social-icon" /></a>
+            <span class="social-name" id="mostfollowed-twitter-name">...</span>
+          </div>
+          <div class="social-info" id="mostfollowed-angel_list" style="visibility: hidden;">
+            <a href="#" target="_blank" class="icon-link" id="mostfollowed-angel_list-url"><img src="assets/angellist.svg" class="social-icon" /></a>
+            <span class="social-name" id="mostfollowed-angel_list-name">...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Implemetation file for all the view-related callbacks. -->
+  <script src="dist/js/summary.umd-es2015.js"></script>
+</body>
+
+</html>
