@@ -1,7 +1,7 @@
 # Connected Sift
 ### Don't miss out on important emails
 
-[<img src="http://static.redsift.io/assets/icons/deploy.svg">](https://dashboard.redsift.cloud/catalogue)
+[<img src="http://static.redsift.io/assets/icons/run.svg">](https://dashboard.redsift.cloud/catalogue)
 
 This Sift will triage your incoming emails based on the strength of your social connections with the sender. It currently supports Twitter and Angel List connections.
 
