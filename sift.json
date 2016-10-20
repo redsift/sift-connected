@@ -4,7 +4,7 @@
   "subtitle": "Don't miss out on important emails",
   "description": "This Sift will prioritize your incoming emails based on the strength of your social connections with the sender. It currently supports Twitter and Angel List connections.",
   "author": "Randal Pinto <randal@redsift.io>",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "icon": "assets/icon.svg",
   "marketing": {
     "screenshots": [
