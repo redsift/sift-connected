@@ -14,7 +14,7 @@ module.exports = function (got) {
     // Filtering out token info from the auth info sent to the frontend
     var jv = 'connected';
     try {
-      jv = JSON.parse(datum.value);
+      jv = JSON.parse(decodeURIComponent(datum.value));
       ['access_token', 'oauth_token', 'oauth_token_secret'].forEach(function (k) {
         if(jv[k]) {
           delete jv[k];
