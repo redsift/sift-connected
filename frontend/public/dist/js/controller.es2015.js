@@ -1870,8 +1870,8 @@ class ConnectedController extends SiftController {
       keys: ['twitter', 'angel_list', 'fullcontact']
     }).then((results) => {
       return {
-        twitter: results[0].value ? JSON.parse(results[0].value):null,
-        angel_list: results[1].value ? JSON.parse(results[1].value):null,
+        twitter: results[0].value,
+        angel_list: results[1].value,
         fullcontact: results[2].value
       }
     });
