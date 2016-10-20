@@ -15,6 +15,7 @@ module.exports = function (got) {
     var jv = 'connected';
     try {
       console.log('the node receives:', datum);
+      console.log('bufferToString:',datum.value.toString());
       jv = JSON.parse(decodeURIComponent(datum.value));
       ['access_token', 'oauth_token', 'oauth_token_secret'].forEach(function (k) {
         if(jv[k]) {
