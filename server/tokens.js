@@ -14,6 +14,7 @@ module.exports = function (got) {
     // Filtering out token info from the auth info sent to the frontend
     var jv = 'connected';
     try {
+      console.log('the node receives:', datum);
       jv = JSON.parse(decodeURIComponent(datum.value));
       ['access_token', 'oauth_token', 'oauth_token_secret'].forEach(function (k) {
         if(jv[k]) {
@@ -21,7 +22,9 @@ module.exports = function (got) {
         }
       });
     }
-    catch (e) {}
+    catch (e) {
+      console.log('looks like something failed:', e)
+    }
     ret.push({ name: 'auth', key: datum.key, value: jv });
   });
   return ret;
