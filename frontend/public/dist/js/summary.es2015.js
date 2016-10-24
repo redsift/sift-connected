@@ -1808,6 +1808,7 @@ class ConnectedSummaryView extends SiftView {
   // TODO: link to docs
   presentView(value) {
     this._data = value.data;
+    this._sizeClass = value.sizeClass.current;
     this._updateYou(this._data.auths);
     this._updateConnectedEmails(this._data.threads);
     this._updateLatestConnections(this._data.stats);
@@ -1842,11 +1843,20 @@ class ConnectedSummaryView extends SiftView {
       this._showPage('connected');
       return;
     }
-    else if (fc === false) {
-      this._setupStage = '_welcomePopup';
-    }
     else {
-      this._setupStage = '_socialPopup';
+      this._showPage('disconnected');
+      if(this._sizeClass.height || this._sizeClass.width) {
+        this._showPage('makefullscreen');
+        return;
+      }
+      else {
+        if (fc === false) {
+          this._setupStage = '_welcomePopup';
+        }
+        else {
+          this._setupStage = '_socialPopup';
+        }
+      }
     }
     document.getElementById('setup').onclick = this._onSetup.bind(this);
     this._popup(this._setupStage);
