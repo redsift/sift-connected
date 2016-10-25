@@ -13,11 +13,14 @@ module.exports = function (got) {
   const withData = got['with'];
   const lookupData = got['lookup'];
 
-  var fcApiKey;
-  if (lookupData[0].data && lookupData[0].data.value) {
-    fcApiKey = lookupData[0].data.value.toString('utf8');
+  var fcApiKey = null;
+  try{
+    fcApiKey = JSON.parse(lookupData[0].data.value.toString('utf8'));
+  }catch(e){
+    console.warn('person.js: fullcontact API key not available', e);
+    return;
   }
-  else {
+  if (!fcApiKey)
     console.warn('person.js: fullcontact API key not available');
     return;
   }

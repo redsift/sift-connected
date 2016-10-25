@@ -18,19 +18,22 @@ module.exports = function (got) {
   var val = JSON.parse(datum.value);
   var alid = datum.key.slice(datum.key.lastIndexOf('/') + 1);
 
-  var credentials;
-  if (lookupData[0].data && lookupData[0].data.value) {
+  var credentials = null;
+  try{
     credentials = JSON.parse(lookupData[0].data.value);
+  }catch(e){
+    console.warn('angellist.js: angellist credentials not available', e);
+    return;
   }
-  else {
+  if (!credentials)
     console.warn('angellist.js: angellist credentials not available');
     return;
   }
 
   var user;
-  if (lookupData[1].data && lookupData[1].data.value) {
+  try{
     user = JSON.parse(lookupData[1].data.value);
-  }
+  }catch(e){ }
   var cachedSender = false;
   var sender;
   if (withData.data && withData.data[0] && withData.data[0].value) {
