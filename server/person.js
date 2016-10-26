@@ -20,7 +20,7 @@ module.exports = function (got) {
     console.warn('person.js: fullcontact API key not available', e);
     return;
   }
-  if (!fcApiKey)
+  if (!fcApiKey){
     console.warn('person.js: fullcontact API key not available');
     return;
   }

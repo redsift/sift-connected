@@ -26,7 +26,7 @@ module.exports = function (got) {
     console.warn('twitter.js: twitter credentials not available', e);
     return;
   }
-  if (!credentials)
+  if (!credentials){
     console.warn('twitter.js: twitter credentials not available');
     return;
   }

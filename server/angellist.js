@@ -25,7 +25,7 @@ module.exports = function (got) {
     console.warn('angellist.js: angellist credentials not available', e);
     return;
   }
-  if (!credentials)
+  if (!credentials){
     console.warn('angellist.js: angellist credentials not available');
     return;
   }
