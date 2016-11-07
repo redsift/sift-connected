@@ -19,21 +19,21 @@ module.exports = function (got) {
   var alid = datum.key.slice(datum.key.lastIndexOf('/') + 1);
 
   var credentials = null;
-  try{
+  try {
     credentials = JSON.parse(lookupData[0].data.value);
-  }catch(e){
+  } catch (e) {
     console.warn('angellist.js: angellist credentials not available', e);
     return;
   }
-  if (!credentials){
+  if (!credentials) {
     console.warn('angellist.js: angellist credentials not available');
     return;
   }
 
   var user;
-  try{
+  try {
     user = JSON.parse(lookupData[1].data.value);
-  }catch(e){ }
+  } catch (e) { }
   var cachedSender = false;
   var sender;
   if (withData.data && withData.data[0] && withData.data[0].value) {
@@ -52,7 +52,7 @@ module.exports = function (got) {
     if (results[0]) {
       ret.push({ name: 'user-cache', key: 'angellist', value: results[0] });
     }
-    if (!cachedSender && results[1]) {
+    if (!cachedSender && results[1] && results[1].user) {
       ret.push({ name: 'stats', key: 'angellist/' + alid, value: { followers: results[1].user.follower_count, username: results[1].user.name, url: results[1].user.angellist_url } });
       ret.push({ name: 'stats', key: 'angellist/latest', value: { username: results[1].user.name, url: results[1].user.angellist_url } });
       ret.push({ name: 'alids-cache', key: alid, value: results[1] });

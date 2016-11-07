@@ -1,8 +1,8 @@
 {
   "name": "sift-connected",
   "display-name": "Connected",
-  "subtitle": "Don't miss out on important emails",
-  "description": "This Sift will prioritize your incoming emails based on the strength of your social connections with the sender. It currently supports Twitter and Angel List connections.",
+  "subtitle": "Easily identify important emails",
+  "description": "Optimize which emails to read first based on your social connections with the sender. Currently supporting Twitter and Angel List.",
   "author": "Randal Pinto <randal@redsift.io>",
   "version": "1.0.1",
   "icon": "assets/icon.svg",
