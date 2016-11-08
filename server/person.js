@@ -14,13 +14,13 @@ module.exports = function (got) {
   const lookupData = got['lookup'];
 
   var fcApiKey = null;
-  try{
+  try {
     fcApiKey = lookupData[0].data.value.toString('utf8');
-  }catch(e){
+  } catch (e) {
     console.warn('person.js: fullcontact API key not available', e);
     return;
   }
-  if (!fcApiKey){
+  if (!fcApiKey) {
     console.warn('person.js: fullcontact API key not available');
     return;
   }
@@ -52,15 +52,15 @@ function _getReturnValues(key, sp, val) {
   var ret = [];
   // Twitter
   if (sp.twitter && sp.twitter.id) {
-    ret.push({ name: 'twitter', key: key + '/' + sp.twitter.id, value: { requester: val.requester, url: sp.twitter.url, username: sp.twitter.username }});
+    ret.push({ name: 'twitter', key: key + '/' + sp.twitter.id, value: { requester: val.requester, url: sp.twitter.url, username: sp.twitter.username } });
   }
   // AngelList
   if (sp.angellist && sp.angellist.id) {
     ret.push({ name: 'angellist', key: key + '/' + sp.angellist.id, value: { requester: val.requester, url: sp.angellist.url, username: sp.angellist.username } });
   }
   // Empty response for bot
-  if(ret.length === 0 && val.requester === 'slackbot') {
-    ret.push({ name: 'slackresponse', key: key.slice(key.lastIndexOf('/') + 1), value: val});
+  if (ret.length === 0 && val.requester === 'slackbot') {
+    ret.push({ name: 'slackresponse', key: key.slice(key.lastIndexOf('/') + 1), value: val });
   }
   return ret;
 }
