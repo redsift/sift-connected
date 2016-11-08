@@ -15,7 +15,7 @@ module.exports = function (got) {
 
   var fcApiKey = null;
   try{
-    fcApiKey = JSON.parse(lookupData[0].data.value.toString('utf8'));
+    fcApiKey = lookupData[0].data.value.toString('utf8');
   }catch(e){
     console.warn('person.js: fullcontact API key not available', e);
     return;
