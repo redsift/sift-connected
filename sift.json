@@ -3,7 +3,7 @@
   "display-name": "Connected",
   "subtitle": "Easily identify important emails",
   "description": "Optimize which emails to read first based on your social connections with the sender. Currently supporting Twitter and Angel List.",
-  "author": "Randal Pinto <randal@redsift.io>",
+  "author": "Randal Pinto",
   "version": "1.0.1",
   "icon": "assets/icon.svg",
   "marketing": {
